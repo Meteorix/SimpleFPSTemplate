@@ -24,8 +24,9 @@ AFPSBlackHoleActor::AFPSBlackHoleActor()
 	InnerSphereComp->OnComponentBeginOverlap.AddDynamic(this, &AFPSBlackHoleActor::OverlapInnerSphere);
 
 	OuterSphereComp = CreateDefaultSubobject<USphereComponent>(TEXT("OuterSphereComp"));
+	OuterSphereComp->SetCollisionEnabled(ECollisionEnabled::QueryOnly);
 	OuterSphereComp->SetSimulatePhysics(false);
-	OuterSphereComp->SetSphereRadius(3000);
+	OuterSphereComp->SetSphereRadius(1000);
 	OuterSphereComp->SetupAttachment(MeshComp);
 }
 
@@ -38,6 +39,7 @@ void AFPSBlackHoleActor::BeginPlay()
 
 void AFPSBlackHoleActor::OverlapInnerSphere(UPrimitiveComponent * OverlappedComponent, AActor * OtherActor, UPrimitiveComponent * OtherComp, int32 OtherBodyIndex, bool bFromSweep, const FHitResult & SweepResult)
 {
+	UE_LOG(LogTemp, Warning, TEXT("overlap inner sphere: %s"), *(OtherActor->GetName()));
 	if (OtherActor) {
 		OtherActor->Destroy();
 	}
