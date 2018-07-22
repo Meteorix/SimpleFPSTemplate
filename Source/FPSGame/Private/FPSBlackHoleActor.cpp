@@ -3,6 +3,7 @@
 #include "FPSBlackHoleActor.h"
 #include "Components/StaticMeshComponent.h"
 #include "Components/SphereComponent.h"
+#include "Engine/StaticMeshActor.h"
 
 
 // Sets default values
@@ -23,6 +24,7 @@ AFPSBlackHoleActor::AFPSBlackHoleActor()
 	InnerSphereComp->OnComponentBeginOverlap.AddDynamic(this, &AFPSBlackHoleActor::OverlapInnerSphere);
 
 	OuterSphereComp = CreateDefaultSubobject<USphereComponent>(TEXT("OuterSphereComp"));
+	OuterSphereComp->SetSimulatePhysics(false);
 	OuterSphereComp->SetSphereRadius(3000);
 	OuterSphereComp->SetupAttachment(MeshComp);
 }
